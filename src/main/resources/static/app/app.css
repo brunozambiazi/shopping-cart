@@ -14,21 +14,9 @@ header h1 {
 	font-weight: bold;
 }
 
-header input.form-control {
-	background: #252a2f;
-    border: 1px solid #525c66;
-    color: #878a8c;
-}
-
 h4 {
 	font-size: 14px;
 	text-transform: uppercase;
-}
-
-
-.align-baseline {
-    align-items: baseline;
-    display: flex;
 }
 
 .btn-cart {
@@ -60,4 +48,11 @@ h4 {
     font-size: 24px;
     padding-right: 5px;
     padding-top: 5px;
+}
+
+@media (min-width: 600px) {
+	.align-baseline {
+	    align-items: baseline;
+	    display: flex;
+	}
 }

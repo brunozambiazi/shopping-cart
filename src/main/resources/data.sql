@@ -1,0 +1,1 @@
+insert into PRODUCT (ID, NAME, IMAGE_URL, PRICE) values (1, 'Carro', 'resources/images/product.jpg', 10);

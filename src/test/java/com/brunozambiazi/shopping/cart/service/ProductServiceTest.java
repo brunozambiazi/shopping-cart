@@ -11,6 +11,7 @@ import com.brunozambiazi.shopping.cart.exception.InvalidProductException;
 import com.brunozambiazi.shopping.cart.service.impl.ProductServiceImpl;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Random;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +21,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.util.CollectionUtils;
 
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("unchecked")
 public class ProductServiceTest {
 
 	@Mock
@@ -30,6 +32,8 @@ public class ProductServiceTest {
 
 	@Test
 	public void findAll_noOne() {
+		when(dao.findAll()).thenReturn(Collections.EMPTY_LIST);
+
 		assertTrue(CollectionUtils.isEmpty(service.findAll()));
 	}
 
@@ -66,13 +70,13 @@ public class ProductServiceTest {
 	@Test
 	public void findById_validId() {
 		Product p1 = new Product("1");
-		when(dao.findById("1")).thenReturn(p1);
+		when(dao.findOne("1")).thenReturn(p1);
 
 		Product p2 = new Product("2");
-		when(dao.findById("2")).thenReturn(p2);
+		when(dao.findOne("2")).thenReturn(p2);
 
 		Product p3 = new Product("3");
-		when(dao.findById("3")).thenReturn(p3);
+		when(dao.findOne("3")).thenReturn(p3);
 
 		assertEquals(p1, service.findById("1"));
 		assertEquals(p2, service.findById("2"));

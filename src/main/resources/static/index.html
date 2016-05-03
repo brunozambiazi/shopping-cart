@@ -6,22 +6,33 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	
 	<link href="resources/css/bootstrap.css" rel="stylesheet" />
-	<link href="resources/css/app.css" rel="stylesheet" />
+	<link href="resources/css/bootstrap-theme.css" rel="stylesheet" />
+	<link href="app/app.css" rel="stylesheet" />
 	
+	<script src="resources/js/jquery.js"></script>
 	<script src="resources/js/angular.js"></script>
+	<script src="resources/js/bootstrap.js"></script>
 	<script src="app/app.js"></script>
 </head>
 <body ng-controller="AppController">
+
+	<!-- page header -->
 	<header>
 		<div class="container">
 			<div class="row align-baseline">
-				<div class="col-md-6 col-xs-6"><h1>Shopping Cart</h1></div>
-				<div class="col-md-3 col-xs-9"><input ng-model="search" class="form-control" placeholder="search..." /></div>
-				<div class="col-md-3 col-xs-3">cart: {{chart.items.length}}</div>
+				<div class="col-md-6"><h1>Shopping Cart</h1></div>
+				<div class="col-md-3 col-xs-4"><input ng-model="search" class="form-control" placeholder="search..." /></div>
+				<div class="col-md-3 col-xs-4">
+					<button data-toggle="modal" data-target="#cart" type="button" class="btn btn-warning">
+						{{chart.items.length}} item(s) <span class="glyphicon glyphicon-shopping-cart"></span>
+					</button>
+				</div>
 			</div>
 		</div>
 	</header>
-	<hr />	
+	<hr />
+	
+	<!-- products list -->
 	<div class="container">
 		<div class="row">
 			<div ng-repeat="product in products | filter:search" class="col-md-3 col-sm-6">
@@ -42,5 +53,24 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- cart modal -->
+	<div id="cart" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+		    <div class="modal-content">
+		    	<div class="modal-header">
+		        	<button type="button" class="close" data-dismiss="modal">&times;</button>
+		        	<h4 class="modal-title">Modal Header</h4>
+		      	</div>
+		      	<div class="modal-body">
+			        <p>Some text in the modal.</p>
+		      	</div>
+		      	<div class="modal-footer">
+			    	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      	</div>
+		    </div>
+	  	</div>
+	</div>
+	
 </body>
 </html>

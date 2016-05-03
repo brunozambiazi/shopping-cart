@@ -7,6 +7,7 @@ import org.springframework.aop.support.AbstractPointcutAdvisor;
 import org.springframework.aop.support.StaticMethodMatcherPointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 @Component
 public class UserSessionAdvisor extends AbstractPointcutAdvisor {
@@ -17,7 +18,7 @@ public class UserSessionAdvisor extends AbstractPointcutAdvisor {
 
 		@Override
 		public boolean matches(Method method, Class<?> targetClass) {
-			return targetClass.getPackage().getName().endsWith(".service.impl");
+			return targetClass.isAnnotationPresent(Service.class);
 		}
 
 	};

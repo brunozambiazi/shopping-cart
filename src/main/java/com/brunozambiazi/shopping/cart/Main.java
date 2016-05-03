@@ -1,23 +1,27 @@
 package com.brunozambiazi.shopping.cart;
 
-import com.brunozambiazi.shopping.cart.dao.ProductDao;
-import com.brunozambiazi.shopping.cart.entity.Product;
-import java.math.BigDecimal;
-import java.util.UUID;
+import javax.sql.DataSource;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @SpringBootApplication
 @Controller
-public class Main extends SpringBootServletInitializer implements CommandLineRunner {
+public class Main extends SpringBootServletInitializer {
+
+	@Bean
+	public DataSource dataSource() {
+		return new EmbeddedDatabaseBuilder()
+			.setType(EmbeddedDatabaseType.HSQL)
+			.build();
+	}
 
 	@Bean
 	public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
@@ -26,32 +30,18 @@ public class Main extends SpringBootServletInitializer implements CommandLineRun
 		return advisor;
 	}
 
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-		return builder.sources(Main.class);
-	}
-
 	@RequestMapping("/")
 	public String index() {
 		return "index";
 	}
 
-	public static void main(String[] args) {
-		SpringApplication.run(Main.class, args);
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+		return builder.sources(Main.class);
 	}
 
-	@Autowired
-	private ProductDao dao;
-
-	@Override
-	public void run(String... args) throws Exception {
-		for (int x = 1; x <= 10; x++) {
-			Product p1 = new Product(UUID.randomUUID().toString());
-			p1.setName("Product "+x);
-			p1.setPrice(BigDecimal.TEN);
-			p1.setImageUrl("resources/images/product.jpg");
-			dao.save(p1);
-		}
+	public static void main(String[] args) {
+		SpringApplication.run(Main.class, args);
 	}
 
 }

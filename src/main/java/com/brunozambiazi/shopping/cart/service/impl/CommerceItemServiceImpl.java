@@ -13,6 +13,7 @@ import com.brunozambiazi.shopping.cart.service.ProductService;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.UUID;
+import org.apache.commons.collections4.IteratorUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,9 +34,9 @@ public class CommerceItemServiceImpl implements CommerceItemService {
 	@Override
 	public Collection<CommerceItem> findAll() {
 		LOG.debug("Finding all commerce items");
-		Collection<CommerceItem> items = dao.findAll();
+		Iterable<CommerceItem> items = dao.findAll();
 		LOG.trace(" .. items: {}", items);
-		return items;
+		return IteratorUtils.toList(items.iterator());
 	}
 
 	@Override
@@ -46,7 +47,7 @@ public class CommerceItemServiceImpl implements CommerceItemService {
 			throw new InvalidCommerceItemException("The informed item is invalid.");
 		}
 
-		CommerceItem entity = dao.findById(id);
+		CommerceItem entity = dao.findOne(id);
 		LOG.debug(" .. item: {}", entity);
 		return entity;
 	}
@@ -79,7 +80,7 @@ public class CommerceItemServiceImpl implements CommerceItemService {
 			throw new InvalidUserSessionException();
 		}
 
-		dao.remove(item);
+		dao.delete(item);
 		LOG.debug(" .. item {} removed", id);
 	}
 

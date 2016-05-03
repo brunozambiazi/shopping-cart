@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.brunozambiazi.shopping.cart.dao.CommerceItemDao;
@@ -18,6 +20,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Random;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,6 +30,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.util.CollectionUtils;
 
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("unchecked")
 public class CommerceItemServiceTest {
 
 	@Mock
@@ -40,6 +44,8 @@ public class CommerceItemServiceTest {
 
 	@Test
 	public void findAll_noOne() {
+		when(dao.findAll()).thenReturn(Collections.EMPTY_LIST);
+
 		assertTrue(CollectionUtils.isEmpty(service.findAll()));
 	}
 
@@ -76,13 +82,13 @@ public class CommerceItemServiceTest {
 	@Test
 	public void findById_validId() {
 		CommerceItem p1 = new CommerceItem("1");
-		when(dao.findById("1")).thenReturn(p1);
+		when(dao.findOne("1")).thenReturn(p1);
 
 		CommerceItem p2 = new CommerceItem("2");
-		when(dao.findById("2")).thenReturn(p2);
+		when(dao.findOne("2")).thenReturn(p2);
 
 		CommerceItem p3 = new CommerceItem("3");
-		when(dao.findById("3")).thenReturn(p3);
+		when(dao.findOne("3")).thenReturn(p3);
 
 		assertEquals(p1, service.findById("1"));
 		assertEquals(p2, service.findById("2"));
@@ -144,7 +150,7 @@ public class CommerceItemServiceTest {
 		CommerceItem item = new CommerceItem("1");
 		item.setUser("otheruser");
 
-		when(dao.findById("1")).thenReturn(item);
+		when(dao.findOne("1")).thenReturn(item);
 
 		service.remove("1", "user");
 	}
@@ -154,7 +160,7 @@ public class CommerceItemServiceTest {
 		CommerceItem item = new CommerceItem("1");
 		item.setUser("user");
 
-		when(dao.findById("1")).thenReturn(item);
+		when(dao.findOne("1")).thenReturn(item);
 
 		service.remove("1", "user");
 	}
@@ -192,9 +198,12 @@ public class CommerceItemServiceTest {
 		when(productService.findById("1")).thenReturn(product);
 
 		CommerceItem item = service.save("1", 1, "user");
+		verify(dao).save(any(CommerceItem.class));
+
 		assertNotNull(item);
 		assertEquals(new Integer(1), item.getQuantity());
 		assertEquals(BigDecimal.ONE, item.getAmount());
+
 	}
 
 	@Test
@@ -210,6 +219,8 @@ public class CommerceItemServiceTest {
 		when(dao.findByUserAndProduct("user", product)).thenReturn(item);
 
 		CommerceItem savedItem = service.save("1", 10, "user");
+		verify(dao).save(any(CommerceItem.class));
+
 		assertNotNull(savedItem);
 		assertEquals(item, savedItem);
 		assertEquals(new Integer(10), item.getQuantity());

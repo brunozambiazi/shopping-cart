@@ -5,6 +5,7 @@ import com.brunozambiazi.shopping.cart.entity.Product;
 import com.brunozambiazi.shopping.cart.exception.InvalidProductException;
 import com.brunozambiazi.shopping.cart.service.ProductService;
 import java.util.Collection;
+import org.apache.commons.collections4.IteratorUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,9 +23,9 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public Collection<Product> findAll() {
 		LOG.debug("Finding all products");
-		Collection<Product> items = dao.findAll();
+		Iterable<Product> items = dao.findAll();
 		LOG.trace(" .. items: {}", items);
-		return items;
+		return IteratorUtils.toList(items.iterator());
 	}
 
 	@Override
@@ -35,7 +36,7 @@ public class ProductServiceImpl implements ProductService {
 			throw new InvalidProductException("The informed product is invalid.");
 		}
 
-		Product entity = dao.findById(id);
+		Product entity = dao.findOne(id);
 		LOG.debug(" .. product: {}", entity);
 		return entity;
 	}

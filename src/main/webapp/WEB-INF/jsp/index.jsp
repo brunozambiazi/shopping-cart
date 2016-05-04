@@ -1,6 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<body>
-	index
-</body>
-</html>
+<%
+   request.getRequestDispatcher("/index.html").forward(request, response);
+%>

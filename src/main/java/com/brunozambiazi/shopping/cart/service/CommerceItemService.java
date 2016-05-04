@@ -5,6 +5,7 @@ import com.brunozambiazi.shopping.cart.entity.CommerceItem;
 import com.brunozambiazi.shopping.cart.exception.InvalidCommerceItemException;
 import com.brunozambiazi.shopping.cart.exception.InvalidProductException;
 import com.brunozambiazi.shopping.cart.exception.InvalidUserSessionException;
+import com.brunozambiazi.shopping.cart.interceptor.UserSession;
 
 public interface CommerceItemService extends BaseService<CommerceItem, String> {
 
@@ -14,7 +15,7 @@ public interface CommerceItemService extends BaseService<CommerceItem, String> {
 	 * @param user The user for whom the shopping cart belongs.
 	 * @return An instance of {@link ShoppingCart}.
 	 */
-	ShoppingCart mountShoppingCart(String user);
+	ShoppingCart mountShoppingCart(@UserSession String user);
 
 	/**
 	 * Remove the informed commerce item if its really exists in repository and belongs to the informed user.
@@ -24,7 +25,7 @@ public interface CommerceItemService extends BaseService<CommerceItem, String> {
 	 * @throws InvalidCommerceItemException If the informed item is invalid or not exists.
 	 * @throws InvalidUserSessionException If the informed item doesn't belong to the informed user.
 	 */
-	void remove(String id, String user) throws InvalidCommerceItemException, InvalidUserSessionException;
+	void remove(String id, @UserSession String user) throws InvalidCommerceItemException, InvalidUserSessionException;
 
 	/**
 	 * Save the quantity of some product as a commerce item of the user.
@@ -35,6 +36,6 @@ public interface CommerceItemService extends BaseService<CommerceItem, String> {
 	 * @throws InvalidProductException If the product doesn't exist (or if the id is invalid)
 	 *     or if the quantity is less than one.
 	 */
-	CommerceItem save(String productId, Integer quantity, String user) throws InvalidProductException;
+	CommerceItem save(String productId, Integer quantity, @UserSession String user) throws InvalidProductException;
 
 }

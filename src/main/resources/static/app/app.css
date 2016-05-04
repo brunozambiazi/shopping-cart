@@ -30,6 +30,18 @@ h4 {
 	color: white;
 }
 
+.cart-quantity {
+	display: block;
+	font-weight: bold;
+	text-align: center;
+	width: 20px;
+}
+
+.modal-title {
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
 .product {
     background: #fff;
     border: 1px solid #e8e8e8;
@@ -45,7 +57,7 @@ h4 {
 
 .product .price {
     color: #2f353b;
-    font-size: 24px;
+    font-size: 18px;
     padding-right: 5px;
     padding-top: 5px;
 }

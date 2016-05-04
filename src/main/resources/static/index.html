@@ -23,8 +23,8 @@
 				<div class="col-md-6"><h1>Shopping Cart</h1></div>
 				<div class="col-md-3 col-xs-4"><input ng-model="search" class="form-control" placeholder="search..." /></div>
 				<div class="col-md-3 col-xs-4">
-					<button data-toggle="modal" data-target="#cart" type="button" class="btn btn-warning">
-						{{chart.items.length}} item(s) <span class="glyphicon glyphicon-shopping-cart"></span>
+					<button ng-click="openCart()" data-toggle="modal" data-target="#cart" type="button" class="btn btn-warning">
+						Total: {{cart.amount | currency}} <span class="glyphicon glyphicon-shopping-cart"></span>
 					</button>
 				</div>
 			</div>
@@ -37,14 +37,17 @@
 		<div class="row">
 			<div ng-repeat="product in products | filter:search" class="col-md-3 col-sm-6">
 				<div class="product">
-					<div class="image"><img src="{{product.image}}" /></div>
+					<div class="image"><img ng-src="{{product.image}}" /></div>
 					<div class="caption">
 						<h4>{{product.name}}</h4>
 						<div class="row">
 							<div class="col-md-4 col-sm-4 col-xs-4 price">{{product.price | currency}}</div>
 							<div class="col-md-8 col-sm-8 col-xs-8" style="text-align: right">
-								<button ng-click="addToChart(product)" type="button" class="btn btn-cart">
+								<button ng-show="!product.inCart" ng-click="addToCart(product)" type="button" class="btn btn-warning">
 					       			ADD TO CART <span class="glyphicon glyphicon-shopping-cart"></span>
+					        	</button>
+					        	<button ng-show="product.inCart" ng-click="removeFromCart(product)" type="button" class="btn btn-danger">
+					       			REMOVE CART <span class="glyphicon glyphicon-shopping-cart"></span>
 					        	</button>
 					        </div>
 				        </div>
@@ -60,13 +63,52 @@
 		    <div class="modal-content">
 		    	<div class="modal-header">
 		        	<button type="button" class="close" data-dismiss="modal">&times;</button>
-		        	<h4 class="modal-title">Modal Header</h4>
+		        	<span class="modal-title">My cart</span>
 		      	</div>
 		      	<div class="modal-body">
-			        <p>Some text in the modal.</p>
-		      	</div>
-		      	<div class="modal-footer">
-			    	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			        <table class="table">
+					    <thead class="thead-inverse">
+						    <tr>
+						        <th class="col-md-7">Product</th>
+						        <th class="col-md-2">Quantity</th>
+						        <th class="col-md-2">Amount</th>
+						        <th class="col-md-1"></th>
+						    </tr>
+					  	</thead>
+					    <tbody>
+					        <tr ng-repeat="element in cartProducts">
+						        <td>{{element.product.name}}</td>
+						        <td>
+						        	<div class="input-group col-md-4">
+						        		<span class="cart-quantity">{{element.item.quantity}}</span>
+							          	<span class="input-group-btn">
+							            	<button ng-click="addToCart(element.product, element.item.quantity+1, true)" type="button" class="btn btn-success btn-xs">
+							                	<span class="glyphicon glyphicon-plus"></span>
+							              	</button>
+							          	</span>
+								        <span class="input-group-btn">
+							            	<button ng-show="element.item.quantity > 1" ng-click="addToCart(element.product, element.item.quantity-1, true)" type="button" class="btn btn-danger btn-xs">
+							                	<span class="glyphicon glyphicon-minus"></span>
+							              	</button>
+							          	</span>
+						          	</div>
+						        </td>
+						        <td>{{element.item.amount | currency}}</td>
+						        <td>
+						        	<button ng-click="removeFromCart(element.product, true)" type="button" class="btn btn-danger btn-xs">
+						       			Remove <span class="glyphicon glyphicon-shopping-cart"></span>
+						        	</button>
+						        </td>
+					      	</tr>
+					    </tbody>
+					    <tfoot class="tfoot-inverse">
+					    	<tr>
+					    		<th colspan="2" style="text-align: right;">Total:</th>
+					    		<th>{{cart.amount | currency}}</th>
+					    		<th></th>
+					    	</tr>
+					    </tfoot>
+					</table>
 		      	</div>
 		    </div>
 	  	</div>

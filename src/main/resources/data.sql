@@ -1,1 +1,12 @@
-insert into PRODUCT (ID, NAME, IMAGE_URL, PRICE) values (1, 'Carro', 'resources/images/product.jpg', 10);
+insert into PRODUCT (ID, NAME, IMAGE_URL, PRICE) values (1, 'Smartphone Xiaomi', 'resources/images/product.jpg', 699);
+insert into PRODUCT (ID, NAME, IMAGE_URL, PRICE) values (2, 'Baterry', 'resources/images/product.jpg', 62.9);
+insert into PRODUCT (ID, NAME, IMAGE_URL, PRICE) values (3, 'Charger', 'resources/images/product.jpg', 145.9);
+insert into PRODUCT (ID, NAME, IMAGE_URL, PRICE) values (4, 'Ear phone', 'resources/images/product.jpg', 479);
+insert into PRODUCT (ID, NAME, IMAGE_URL, PRICE) values (5, 'CD AC/DC', 'resources/images/product.jpg', 54.99);
+insert into PRODUCT (ID, NAME, IMAGE_URL, PRICE) values (6, 'Smart TV LED 65"', 'resources/images/product.jpg', 8099.1);
+insert into PRODUCT (ID, NAME, IMAGE_URL, PRICE) values (7, 'CD AC/DC', 'resources/images/product.jpg', 54.99);
+insert into PRODUCT (ID, NAME, IMAGE_URL, PRICE) values (8, 'Digital Camera', 'resources/images/product.jpg', 1887.78);
+insert into PRODUCT (ID, NAME, IMAGE_URL, PRICE) values (9, 'Smartphone Motorola', 'resources/images/product.jpg', 2299);
+insert into PRODUCT (ID, NAME, IMAGE_URL, PRICE) values (10, 'Popkorn Machine', 'resources/images/product.jpg', 124.23);
+insert into PRODUCT (ID, NAME, IMAGE_URL, PRICE) values (11, 'Game of Thrones Collection', 'resources/images/product.jpg', 50);
+insert into PRODUCT (ID, NAME, IMAGE_URL, PRICE) values (12, 'Sherlock Holmes Box', 'resources/images/product.jpg', 89.91);
